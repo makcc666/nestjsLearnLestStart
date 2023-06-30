@@ -10,11 +10,6 @@ import { getMongoConfig } from './configs/mongo.config';
 import {TypegooseModule} from 'nestjs-typegoose'
 @Module({
 	imports: [
-		// MongooseModule.forRoot('mongodb://localhost/test'),
-		/*MongooseModule.forRootAsync({
-
-		}),*/
-
 		TypegooseModule.forRootAsync({
 			imports:[ConfigModule],
 			inject:[ConfigService],
