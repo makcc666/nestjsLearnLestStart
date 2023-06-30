@@ -6,20 +6,20 @@ import { TopPageModule } from './top-page/top-page.module';
 import { ProductModule } from './product/product.module';
 import { ReviewModule } from './review/review.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UsersModule } from './users/users.module';
 import { getMongoConfig } from './configs/mongo.config';
-
+import {TypegooseModule} from 'nestjs-typegoose'
 @Module({
 	imports: [
 		// MongooseModule.forRoot('mongodb://localhost/test'),
-		MongooseModule.forRootAsync({
+		/*MongooseModule.forRootAsync({
+
+		}),*/
+
+		TypegooseModule.forRootAsync({
 			imports:[ConfigModule],
 			inject:[ConfigService],
 			useFactory:getMongoConfig,
 		}),
-
-		UsersModule,
 		ConfigModule.forRoot(),
 		AuthModule,
 		TopPageModule,
