@@ -20,7 +20,7 @@ export class ReviewService {
 	}
 
 	async deleteByProductId(productId: string): Promise<number> {
-		const res = await this.reviewModel.deleteMany({ productId }).exec();
+		const res = await this.reviewModel.deleteMany({ productId: new Types.ObjectId(productId) }).exec();
 		console.log('ReviewService::deleteByProductId', res);
 		return res.deletedCount;
 	}
