@@ -20,6 +20,11 @@ export class ReviewController {
 		}
 	}
 
+	@Delete('byProduct/:productId')
+	async deleteByProduct(@Param('productId') productId: string) {
+		return this.reviewService.deleteByProductId(productId);
+	}
+
 	@Get('byProduct/:productId')
 	async getByProduct(@Param('productId') productId: string) {
 		return this.reviewService.findByProductId(productId);
