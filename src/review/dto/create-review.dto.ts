@@ -1,8 +1,11 @@
-export class CreateReviewDto {
-	name: string;
-	title: string;
-	description: string;
-	rating: number;
+import { IsNumber, IsString, Max, Min } from 'class-validator';
 
-	productId: string;
+export class CreateReviewDto {
+	@IsString() name: string;
+	@IsString() title: string;
+
+	@IsString() description: string;
+	@Min(1) @Max(5) @IsNumber() rating: number;
+
+	@IsString() productId: string;
 }
