@@ -18,9 +18,9 @@ export enum TopLevelCategory {
 	Courses, Services, Books, Products,
 }
 
-export interface TopPageModel extends Base, TimeStamps {}
+export interface TopPageModel extends Base {}
 
-export class TopPageModel {
+export class TopPageModel extends TimeStamps{
 	@prop({ enum: TopLevelCategory }) firstCategory: TopLevelCategory;
 	@prop() secondCategory: string;
 	@prop({ unique: true }) alias: string;
