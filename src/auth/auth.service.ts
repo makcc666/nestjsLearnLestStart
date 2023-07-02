@@ -41,10 +41,10 @@ export class AuthService {
 		};
 	}
 
-	async login (email:string){
-		const payload = {email};
+	async login(email: string) {
+		const payload = { email };
 		return {
-			access_token:await this.jwtService.signAsync(payload)
+			access_token: await this.jwtService.signAsync(payload),
 		};
 	}
 }
