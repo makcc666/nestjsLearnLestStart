@@ -18,8 +18,14 @@ export class ProductModel extends TimeStamps{
 	@prop() description: string;
 	@prop() advantages: string;
 	@prop() disAdvantages: string;
-	@prop({ type: () => [String] }) categories: string[];
-	@prop({ type: () => [String] }) tags: string[];
-	@prop({ type: () => [ProductCharacteristics], _id: false }) characteristics: ProductCharacteristics[];
+
+	@prop({ type: () => [String] })
+	categories: string[];
+
+	@prop({ type: () => [String] })
+	tags: string[];
+
+	@prop({ type: () => [ProductCharacteristics], _id: false })
+	characteristics: ProductCharacteristics[];
 
 }
