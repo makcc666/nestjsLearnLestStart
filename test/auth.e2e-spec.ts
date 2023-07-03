@@ -49,21 +49,17 @@ describe('Auth AppController (e2e)', () => {
 		return request(app.getHttpServer())
 			.post(`/auth/login`)
 			.send({ ...loginDto, login: '' })
-			.expect(401)
-			.then(({ body }: request.Response) => {
-				expect(body.error).toBe('Unauthorized');
-				expect(body.message).toBe(USER_NOT_FOUND_ERROR);
-			});
+			.expect(401,{
+				error: 'Unauthorized', message: USER_NOT_FOUND_ERROR, statusCode: 401,
+			})
 	});
 
 	it('/auth/login (POST) - WRONG PASSWORD', async () => {
 		return request(app.getHttpServer())
 			.post(`/auth/login`)
 			.send({ ...loginDto, password: '' })
-			.expect(401)
-			.then(({ body }: request.Response) => {
-				expect(body.error).toBe('Unauthorized');
-				expect(body.message).toBe(USER_WRONG_PASSWORD_ERROR);
+			.expect(401, {
+				error: 'Unauthorized', message: USER_WRONG_PASSWORD_ERROR, statusCode: 401,
 			});
 	});
 
