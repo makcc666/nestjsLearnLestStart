@@ -3,6 +3,7 @@ import { CreateReviewDto } from './dto/create-review.dto';
 import { ReviewService } from './review.service';
 import { REVIEW_NOT_FOUND } from './review.constants';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { UserEmail } from '../decorators/user-email.decorator';
 
 @Controller('review')
 export class ReviewController {
@@ -26,8 +27,8 @@ export class ReviewController {
 		return this.reviewService.deleteByProductId(productId);
 	}
 
-	@Get('byProduct/:productId')
-	async getByProduct(@Param('productId') productId: string) {
+	@UseGuards(JwtAuthGuard) @Get('byProduct/:productId')
+	async getByProduct(@Param('productId') productId: string, @UserEmail() userEmail: string) {
 		return this.reviewService.findByProductId(productId);
 	}
 }
