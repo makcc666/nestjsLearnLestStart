@@ -16,17 +16,17 @@ export class ReviewService {
 		return res;
 	}
 
-	async delete(id: string): Promise<DocumentType<ReviewModel> | null> {
+	async delete(id: Types.ObjectId): Promise<DocumentType<ReviewModel> | null> {
 		return this.reviewModel.findByIdAndDelete(id).exec();
 	}
 
-	async deleteByProductId(productId: string): Promise<number> {
+	async deleteByProductId(productId: Types.ObjectId): Promise<number> {
 		const res = await this.reviewModel.deleteMany({ productId: new Types.ObjectId(productId) }).exec();
 		console.log('ReviewService::deleteByProductId', res);
 		return res.deletedCount;
 	}
 
-	async findByProductId(productId: string): Promise<DocumentType<ReviewModel>[]> {
+	async findByProductId(productId: Types.ObjectId): Promise<DocumentType<ReviewModel>[]> {
 		return this.reviewModel
 			.find({
 				productId: new Types.ObjectId(productId),
