@@ -6,6 +6,7 @@ import { Types, disconnect } from 'mongoose';
 import { CreateReviewDto } from '../src/review/dto/create-review.dto';
 import { REVIEW_NOT_FOUND } from '../src/review/review.constants';
 import { AuthDto } from '../src/auth/dto/auth.dto';
+import { USER_NOT_FOUND_ERROR, USER_WRONG_PASSWORD_ERROR } from '../src/auth/auth.constants';
 
 const productId = new Types.ObjectId().toHexString();
 
@@ -17,7 +18,7 @@ const loginDto: AuthDto = {
 	login: '2some@email.com', password: '123456',
 };
 
-describe('AppController (e2e)', () => {
+describe('Review AppController (e2e)', () => {
 	let app: INestApplication;
 
 	let createdId: string;
@@ -30,7 +31,10 @@ describe('AppController (e2e)', () => {
 
 		app = moduleFixture.createNestApplication();
 		await app.init();
+	});
 
+
+	beforeEach(async () => {
 		const { body } = await request(app.getHttpServer())
 			.post('/auth/login')
 			.send(loginDto);
@@ -88,6 +92,7 @@ describe('AppController (e2e)', () => {
 				statusCode: 404, message: REVIEW_NOT_FOUND,
 			});
 	});
+
 
 	afterAll(() => {
 		disconnect();
