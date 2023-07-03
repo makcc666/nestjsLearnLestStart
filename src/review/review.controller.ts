@@ -15,7 +15,7 @@ export class ReviewController {
 	}
 
 	@UseGuards(JwtAuthGuard) @Delete(':id')
-	async delete(@Param('id') id: string) {
+	async delete(@Param('id') id: string, @UserEmail() userEmail: string) {
 		const deleteDoc = await this.reviewService.delete(id);
 		if (!deleteDoc) {
 			throw new HttpException(REVIEW_NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -27,8 +27,9 @@ export class ReviewController {
 		return this.reviewService.deleteByProductId(productId);
 	}
 
-	@UseGuards(JwtAuthGuard) @Get('byProduct/:productId')
-	async getByProduct(@Param('productId') productId: string, @UserEmail() userEmail: string) {
+	@Get('byProduct/:productId')
+	async getByProduct(@Param('productId') productId: string) {
 		return this.reviewService.findByProductId(productId);
 	}
+
 }
