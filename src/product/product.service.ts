@@ -5,6 +5,7 @@ import { ModelType } from '@typegoose/typegoose/lib/types';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductDto } from './dto/find-product.dto';
 import { ReviewModel } from '../review/review.model';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class ProductService {
@@ -14,15 +15,15 @@ export class ProductService {
 		return this.productModel.create(dto);
 	}
 
-	async findById(id: string) {
+	async findById(id: Types.ObjectId) {
 		return this.productModel.findById(id).exec();
 	}
 
-	async deleteById(id: string) {
+	async deleteById(id: Types.ObjectId) {
 		return this.productModel.findByIdAndDelete(id).exec();
 	}
 
-	async updateById(id: string, dto: CreateProductDto) {
+	async updateById(id: Types.ObjectId, dto: CreateProductDto) {
 		return this.productModel.findByIdAndUpdate(id, dto, { new: true }).exec();
 	}
 
