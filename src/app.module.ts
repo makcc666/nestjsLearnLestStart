@@ -8,6 +8,9 @@ import { ReviewModule } from './review/review.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getMongoConfig } from './configs/mongo.config';
 import {TypegooseModule} from 'nestjs-typegoose'
+import { FilesController } from './files/files.controller';
+import { FilesService } from './files/files.service';
+import { FilesModule } from './files/files.module';
 @Module({
 	imports: [
 		TypegooseModule.forRootAsync({
@@ -19,7 +22,8 @@ import {TypegooseModule} from 'nestjs-typegoose'
 		AuthModule,
 		TopPageModule,
 		ProductModule,
-		ReviewModule
-	], controllers: [AppController], providers: [AppService],
+		ReviewModule,
+		FilesModule
+	], controllers: [AppController, FilesController], providers: [AppService, FilesService],
 })
 export class AppModule {}
