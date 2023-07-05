@@ -26,8 +26,8 @@ export class TopPageModel extends TimeStamps{
 	@prop({ unique: true }) alias: string;
 	@prop() title: string;
 	@prop() category: string;
-	@prop({ type: () => HhData }) hh?: HhData;
-	@prop({ type: () => [TopPageAdvantages] }) advantages: TopPageAdvantages[];
+	@prop({ type: () => HhData , _id: false}) hh?: HhData;
+	@prop({ type: () => [TopPageAdvantages], _id: false }) advantages: TopPageAdvantages[];
 	@prop() seoText: string;
 
 	@prop() tagsTitle: string;
