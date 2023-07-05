@@ -26,15 +26,6 @@ export class TopPageService {
 		return this.topPageModel.findOne({ alias }).exec();
 	}
 
-	async deleteById(id: Types.ObjectId) {
-		return this.topPageModel.findByIdAndDelete(id).exec();
-	}
-
-	async updateById(id: Types.ObjectId, dto: CreateProductDto) {
-
-		return this.topPageModel.findByIdAndUpdate(id, dto, { new: true }).exec();
-	}
-
 	async findByCategory(firstCategory: FindTopPageDto['firstCategory']) {
 
 		const pushToPages: PartialAnotherType<TopPageModel, string> = { alias: '$alias', title: '$title' };
@@ -62,6 +53,19 @@ export class TopPageService {
 				_id: { secondCategory: '$secondCategory' }, pages: { $push: pushToPages },
 			})
 			.exec();
+	}
+
+	async findAll(): Promise<TopPageModel[]> {
+		return this.topPageModel.find({}).exec();
+	}
+
+	async deleteById(id: Types.ObjectId) {
+		return this.topPageModel.findByIdAndDelete(id).exec();
+	}
+
+	async updateById(id: Types.ObjectId, dto: CreateProductDto) {
+
+		return this.topPageModel.findByIdAndUpdate(id, dto, { new: true }).exec();
 	}
 
 	async findByText(text: string) {

@@ -11,6 +11,7 @@ import {TypegooseModule} from 'nestjs-typegoose'
 import { FilesController } from './files/files.controller';
 import { FilesService } from './files/files.service';
 import { FilesModule } from './files/files.module';
+import { SitemapModule } from './sitemap/sitemap.module';
 @Module({
 	imports: [
 		TypegooseModule.forRootAsync({
@@ -23,7 +24,8 @@ import { FilesModule } from './files/files.module';
 		TopPageModule,
 		ProductModule,
 		ReviewModule,
-		FilesModule
+		FilesModule,
+		SitemapModule
 	], controllers: [AppController, FilesController], providers: [AppService, FilesService],
 })
 export class AppModule {}
