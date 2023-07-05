@@ -1,5 +1,5 @@
 import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
-import { prop } from '@typegoose/typegoose';
+import { index, prop } from '@typegoose/typegoose';
 
 export class HhData {
 	@prop() count: number;
@@ -20,13 +20,17 @@ export enum TopLevelCategory {
 
 export interface TopPageModel extends Base {}
 
-export class TopPageModel extends TimeStamps{
+// Не работает поиск в массиве
+// @index({ title: 'text', seoText: 'text', advantages: 'text' })
+
+@index({ '$**': 'text' })
+export class TopPageModel extends TimeStamps {
 	@prop({ enum: TopLevelCategory }) firstCategory: TopLevelCategory;
 	@prop() secondCategory: string;
 	@prop({ unique: true }) alias: string;
 	@prop() title: string;
 	@prop() category: string;
-	@prop({ type: () => HhData , _id: false}) hh?: HhData;
+	@prop({ type: () => HhData, _id: false }) hh?: HhData;
 	@prop({ type: () => [TopPageAdvantages], _id: false }) advantages: TopPageAdvantages[];
 	@prop() seoText: string;
 

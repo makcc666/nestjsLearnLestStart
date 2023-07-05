@@ -39,4 +39,17 @@ export class TopPageService {
 		const cellsToFind: PartialAnotherType<TopPageModel, number> = { alias: 1, secondCategory: 1, title: 1 };
 		return this.topPageModel.find({ firstCategory }, cellsToFind).exec();
 	}
+
+	async findByText(text: string) {
+	try {
+		return await this.topPageModel.find({
+			$text: {
+				$search: text, $caseSensitive: false,
+			},
+		});
+	}catch (e){
+		console.log("E::",e);
+		throw new Error("Asf")
+	}
+	}
 }
