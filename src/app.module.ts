@@ -12,6 +12,7 @@ import { FilesController } from './files/files.controller';
 import { FilesService } from './files/files.service';
 import { FilesModule } from './files/files.module';
 import { SitemapModule } from './sitemap/sitemap.module';
+import { TelegramModule } from './telegram/telegram.module';
 @Module({
 	imports: [
 		TypegooseModule.forRootAsync({
@@ -25,7 +26,8 @@ import { SitemapModule } from './sitemap/sitemap.module';
 		ProductModule,
 		ReviewModule,
 		FilesModule,
-		SitemapModule
+		SitemapModule,
+		TelegramModule
 	], controllers: [AppController, FilesController], providers: [AppService, FilesService],
 })
 export class AppModule {}
