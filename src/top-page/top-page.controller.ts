@@ -8,15 +8,16 @@ import { CreateTopPageDto } from './dto/create-top-page.dto';
 import { TopPageService } from './top-page.service';
 import { IdValidationPipe } from '../pipes/id-validation.pipe';
 import { Types } from 'mongoose';
-import { SLEEP_MS_EACH_HH_UPDATE, TOP_PAGE_NOT_FOUND } from './top-page.constants';
+import { FETCH_HH_DATA_CRON_NAME, SLEEP_MS_EACH_HH_UPDATE, TOP_PAGE_NOT_FOUND } from './top-page.constants';
 import { CreateProductDto } from '../product/dto/create-product.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { HhService } from '../hh/hh.service';
 import { ObjectId } from 'mongodb';
+import { Cron, CronExpression, SchedulerRegistry } from '@nestjs/schedule';
 
 @Controller('top-page')
 export class TopPageController {
-	constructor(private readonly topPageService: TopPageService, private readonly hhService: HhService) {}
+	constructor(private readonly topPageService: TopPageService, private readonly hhService: HhService, private readonly schedulerRegistry: SchedulerRegistry) {}
 
 	@UseGuards(JwtAuthGuard) @Post('create') @UsePipes(new ValidationPipe())
 	async create(@Body() dto: CreateTopPageDto) {
@@ -59,8 +60,12 @@ export class TopPageController {
 		return this.topPageService.findByText(text);
 	}
 
-	@Post('testHh')
+	// @Post('testHh')
+	// @Cron('0 * * * *')
+	@Cron(CronExpression.EVERY_SECOND, { name: FETCH_HH_DATA_CRON_NAME })
 	async testHh() {
+		const job = this.schedulerRegistry.getCronJob(FETCH_HH_DATA_CRON_NAME);
+
 		const data = await this.topPageService.findForHhUpdate(new Date());
 		for (const page of data) {
 			const hhData = await this.hhService.getData(page.category);
