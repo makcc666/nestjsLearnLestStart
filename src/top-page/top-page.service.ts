@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ProductModel } from '../product/product.model';
 import { ModelType } from '@typegoose/typegoose/lib/types';
@@ -15,15 +15,15 @@ import { subDays } from 'date-fns';
 export class TopPageService {
 	constructor(@InjectModel(TopPageModel) private readonly topPageModel: ModelType<TopPageModel>) {}
 
-	async create(dto: CreateTopPageDto):Promise<TopPageModel> {
+	async create(dto: CreateTopPageDto): Promise<TopPageModel> {
 		return this.topPageModel.create(dto);
 	}
 
-	async findById(id: Types.ObjectId):Promise<TopPageModel> {
+	async findById(id: Types.ObjectId): Promise<TopPageModel> {
 		return this.topPageModel.findById(id).exec();
 	}
 
-	async findByAlias(alias: CreateTopPageDto['alias']):Promise<TopPageModel> {
+	async findByAlias(alias: CreateTopPageDto['alias']): Promise<TopPageModel> {
 		return this.topPageModel.findOne({ alias }).exec();
 	}
 
@@ -64,7 +64,7 @@ export class TopPageService {
 		return this.topPageModel.findByIdAndDelete(id).exec();
 	}
 
-	async updateById(id: Types.ObjectId, dto: CreateProductDto):Promise<TopPageModel> {
+	async updateById(id: Types.ObjectId, dto: CreateTopPageDto): Promise<TopPageModel> {
 
 		return this.topPageModel.findByIdAndUpdate(id, dto, { new: true }).exec();
 	}
@@ -78,14 +78,18 @@ export class TopPageService {
 			});
 		}
 		catch (e) {
-			console.log('E::', e);
-			throw new Error('Asf');
+			Logger.log(e);
+			console.log('findByText::error', e);
+			throw e;
 		}
 	}
 
-	async findForHhUpdate(date: Date): Promise<TopPageModel[]> {
+	async findForHhUpdate(date: Date) {
 		return await this.topPageModel.find({
-			firstCategory: TopLevelCategory.Courses, 'hh.updatedAt': { $lt: subDays(date, 1) },
+			firstCategory: TopLevelCategory.Courses, $or: [
+				{ 'hh.updatedAt': { $lt: subDays(date, 1) } },
+				{ 'hh.updatedAt': { $exists: false } },
+			],
 		}).exec();
 	}
 }

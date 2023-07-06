@@ -31,6 +31,6 @@ import { HhModule } from './hh/hh.module';
 		SitemapModule,
 		TelegramModule,
 		HhModule
-	], controllers: [AppController, FilesController], providers: [AppService, FilesService, HhService],
+	],
 })
 export class AppModule {}

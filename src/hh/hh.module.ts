@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
 import { HhService } from './hh.service';
-import { TopPageModule } from '../top-page/top-page.module';
+import { ConfigModule } from '@nestjs/config';
+import { HttpModule } from '@nestjs/axios';
+import { TelegramModule } from '../telegram/telegram.module';
+
+
 
 @Module({
-	providers: [HhService], imports: [TopPageModule],
+	providers: [HhService], imports: [ConfigModule,HttpModule,TelegramModule], exports:[HhService]
 })
 export class HhModule {}
