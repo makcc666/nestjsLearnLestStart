@@ -1,6 +1,6 @@
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { prop } from '@typegoose/typegoose';
-import { IsNumber, IsString, IsOptional, IsArray, ValidateNested, IsEnum } from 'class-validator';
+import { IsNumber, IsString, IsOptional, IsArray, ValidateNested, IsEnum, IsDate } from 'class-validator';
 import { Type } from 'class-transformer';
 import { HhData, TopLevelCategory, TopPageAdvantages } from '../top-page.model';
 
@@ -9,6 +9,7 @@ export class HhDataDto {
 	@IsNumber() juniorSalary: number;
 	@IsNumber() middleSalary: number;
 	@IsNumber() seniorSalary: number;
+	@IsDate() updatedAt: Date;
 }
 
 export class TopPageAdvantagesDto {
