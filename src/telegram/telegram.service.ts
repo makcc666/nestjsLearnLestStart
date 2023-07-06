@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Telegraf } from 'telegraf';
 import { ITelegramOptions } from './telegram.interface';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class TelegramService {
@@ -8,11 +9,15 @@ export class TelegramService {
 	options: ITelegramOptions;
 
 	constructor() {
-		this.options = { token: '6225772169:AAEEtGIssA9O-UF3ylMFKY05DWmqzxXN1uc', chatId: '-995650915' };
+		const configService = new ConfigService();
+
+		this.options = {
+			token: configService.get('TELEGRAM_TOKEN'), chatId: configService.get('TELEGRAM_CHAT_ID'),
+		};
 		this.bot = new Telegraf(this.options.token);
 	}
 
-	async sendMessage(message: string, chatId: string = this.options.chatId){
-		await this.bot.telegram.sendMessage(chatId,message);
+	async sendMessage(message: string, chatId: string = this.options.chatId) {
+		await this.bot.telegram.sendMessage(chatId, message);
 	}
 }
