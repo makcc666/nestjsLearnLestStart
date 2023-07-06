@@ -9,6 +9,7 @@ export class TelegramService {
 	options: ITelegramOptions;
 
 	constructor() {
+		// bad practices
 		const configService = new ConfigService();
 
 		this.options = {
