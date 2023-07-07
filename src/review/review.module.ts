@@ -14,7 +14,6 @@ import { TelegramModule } from '../telegram/telegram.module';
 				},
 			},
 		]),
-		TelegramModule,
 	], providers: [ReviewService],
 })
 

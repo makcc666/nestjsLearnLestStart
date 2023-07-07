@@ -16,6 +16,7 @@ import { TelegramModule } from './telegram/telegram.module';
 import { HhService } from './hh/hh.service';
 import { HhModule } from './hh/hh.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { getTelegramConfig } from './configs/telegram.config';
 
 @Module({
 	imports: [
@@ -30,7 +31,9 @@ import { ScheduleModule } from '@nestjs/schedule';
 		ReviewModule,
 		FilesModule,
 		SitemapModule,
-		TelegramModule,
+		TelegramModule.forRootAsync({
+			imports: [ConfigModule], inject: [ConfigService], useFactory: getTelegramConfig,
+		}),
 		HhModule,
 	],
 })

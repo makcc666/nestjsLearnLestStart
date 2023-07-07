@@ -7,6 +7,6 @@ import { TelegramModule } from '../telegram/telegram.module';
 
 
 @Module({
-	providers: [HhService], imports: [ConfigModule,HttpModule,TelegramModule], exports:[HhService]
+	providers: [HhService], imports: [ConfigModule,HttpModule], exports:[HhService]
 })
 export class HhModule {}
