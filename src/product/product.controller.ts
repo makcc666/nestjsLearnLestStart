@@ -9,12 +9,13 @@ import { PRODUCT_NOT_FOUND_ERROR } from './product.constants';
 import { IdValidationPipe } from '../pipes/id-validation.pipe';
 import { Types } from 'mongoose';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { ApiBody, ApiParam } from '@nestjs/swagger';
 
 @Controller('product')
 export class ProductController {
 	constructor(private readonly productService: ProductService) {}
 
-	@UseGuards(JwtAuthGuard) @Post('create') @UsePipes(new ValidationPipe())
+	@UseGuards(JwtAuthGuard) @Post('create') @UsePipes(new ValidationPipe()) @ApiBody({ type: CreateProductDto })
 	async create(@Body() dto: CreateProductDto) {
 		return this.productService.create(dto);
 	}
